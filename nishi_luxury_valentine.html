@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Nishi ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+/* Blurred background image */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('proposal.jpg') center/cover no-repeat;
+    filter: blur(8px) brightness(0.4);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+    z-index: -1;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    max-width: 90%;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: #d4af37;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-weight: 300;
+    margin-bottom: 40px;
+}
+
+button {
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 50px;
+    border: 2px solid #d4af37;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: 400;
+}
+
+#yesBtn {
+    background: #d4af37;
+    color: black;
+    margin: 10px;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+}
+
+#noBtn {
+    background: transparent;
+    color: #d4af37;
+    position: fixed;   /* KEY FIX */
+    top: 60%;
+    left: 55%;
+}
+
+.message {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #d4af37;
+    animation: fadeIn 2s ease forwards;
+}
+
+.sub-message {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    animation: fadeIn 3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+/* Floating Ring Animation */
+.ring {
+    font-size: 60px;
+    animation: floatUp 3s ease forwards;
+    margin-bottom: 20px;
+}
+
+@keyframes floatUp {
+    0% {transform: translateY(40px); opacity:0;}
+    100% {transform: translateY(0); opacity:1;}
+}
+
+/* Heart shower */
+.heart {
+    position: fixed;
+    top: -10px;
+    color: #d4af37;
+    font-size: 20px;
+    animation: fall linear forwards;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainContent">
+    <h1>Nishi ❤️</h1>
+    <h2>Will You Be My Valentine?</h2>
+    <button id="yesBtn">Yes</button>
+</div>
+
+<button id="noBtn">No</button>
+
+<!-- Royalty-free romantic piano -->
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b7f1e.mp3?filename=romantic-piano-110824.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const music = document.getElementById("bgMusic");
+
+// Start music after first click (browser restriction)
+document.body.addEventListener("click", () => {
+    music.play().catch(()=>{});
+}, { once: true });
+
+// Proper moving No button
+function moveNoButton() {
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+yesBtn.addEventListener("click", () => {
+    document.getElementById("mainContent").innerHTML = `
+        <div class="ring">💍</div>
+        <div class="message">She Said YES!</div>
+        <div class="sub-message">I love you babes ❤️</div>
+    `;
+    noBtn.style.display = "none";
+    startHeartShower();
+});
+
+function startHeartShower() {
+    setInterval(createHeart, 120);
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.fontSize = (Math.random() * 25 + 20) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}
+
+</script>
+
+</body>
+</html>
